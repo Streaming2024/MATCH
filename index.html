@@ -390,8 +390,35 @@ CLUB WC 2025:</strong></h2>
   
   <!-- Zimbabwe vs South Africa --> 
         <div class="match-event" id="match-96277" data-result="vs"> <a title="Zimbabwe vs South Africa" id="match-96277" href="https://ads.newsecrettips.com/?yonotv=ZIM"> <div id="overlay-match"> <div id="watch-match"></div> </div>  </a> <div class="first-team home_team">  <div class="team-logo"> <img loading="lazy" alt="Zimbabwe" height="70" src="https://aimages.willow.tv/teamLogos/zimbabwe.png" title="Zimbabwe" width="70"> </div> <div class="team-name">Zimbabwe</div> </div> <div class="match-time" id="match-96277"> <div class="match-timing"> <div id="match-hour">1:45 PM</div> <div id="result-now"></div> <span class="match-date" data-start="2025-07-14T13:45:00+05:45" data-gameends="2025-07-14T22:45:00+05:45"></span> </div> </div>  <div class="left-team away_team"> <div class="team-logo"> <img loading="lazy" alt="South Africa" height="70" src="https://aimages.willow.tv/teamLogos/southafrica.png" title="South Africa" width="70"> </div> <div class="team-name">South Africa</div> </div> <div class="match-info"> <ul>  <li class="leaguename"><span>Test Series</span></li> </div> </div>
-        
-  
+ 
+  <!-- IMP CODE FOR MATCH CARD --> 
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const container = document.querySelector(".widget-content");
+    const matches = Array.from(container.querySelectorAll(".match-event"));
+    const now = new Date();
+
+    matches.sort((a, b) => {
+      const aStart = new Date(a.querySelector(".match-date").dataset.start);
+      const bStart = new Date(b.querySelector(".match-date").dataset.start);
+      const aEnd = new Date(a.querySelector(".match-date").dataset.gameends);
+      const bEnd = new Date(b.querySelector(".match-date").dataset.gameends);
+
+      const aEnded = now > aEnd;
+      const bEnded = now > bEnd;
+
+      // Rule 1: Ended matches always at the bottom
+      if (aEnded && !bEnded) return 1;
+      if (!aEnded && bEnded) return -1;
+
+      // Rule 2: Within same category (upcoming/ongoing or ended), sort by start time
+      return aStart - bStart;
+    });
+
+    matches.forEach(match => container.appendChild(match));
+  });
+</script>
+
   
   <!--Don't remove this code-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/1.28.0/luxon.min.js"></script>
